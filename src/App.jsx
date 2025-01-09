@@ -2,6 +2,9 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Nav from './components/Nav'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min'
+import Driver from './pages/Driver'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import ShopSignin from './pages/ShopSignin'
@@ -13,7 +16,9 @@ import { useEffect, useState } from 'react'
 import { getProfile } from './Services/userService'
 import { getShop } from './Services/userService'
 import { getDriver } from './Services/userService'
+
 import { getOrder } from './Services/userService'
+
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -77,6 +82,9 @@ const App = () => {
         <h1>Delivery App</h1>
         <Routes>
           <Route path="/" element={<Home />} />
+
+          <Route path="/driver" element={<Driver />} />
+
           <Route
             path="/auth/bananaSignin"
             element={<Signin getUserProfile={getUserProfile} />}
