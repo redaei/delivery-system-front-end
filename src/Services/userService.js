@@ -19,3 +19,8 @@ export const getDriver = async () => {
   const response = await client.get('/drivers/driverProfile')
   return response.data
 }
+
+export const getOrder = async () => {
+  const response = await client.get('/order/orders')
+  return response.data
+}

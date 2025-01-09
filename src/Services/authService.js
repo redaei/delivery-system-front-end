@@ -45,3 +45,8 @@ export const driverSignIn = async (data) => {
   localStorage.setItem('authToken', token)
   return response.data
 }
+
+export const createOrder = async (data) => {
+  const response = await client.post('/order/createOrder', data)
+  return response.data
+}
