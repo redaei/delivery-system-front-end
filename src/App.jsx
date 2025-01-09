@@ -11,16 +11,31 @@ import ShopSignin from './pages/ShopSignin'
 import ShopSignup from './pages/ShopSignup'
 import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
+import CreateOrder from './pages/CreateOrder'
 import { useEffect, useState } from 'react'
 import { getProfile } from './Services/userService'
 import { getShop } from './Services/userService'
 import { getDriver } from './Services/userService'
 
+import { getOrder } from './Services/userService'
+
+
 const App = () => {
   const [user, setUser] = useState(null)
+  const [order, setOrder] = useState(null)
+
   const getUserProfile = async () => {
     try {
       const data = await getProfile()
+      setUser(data)
+    } catch (error) {
+      setUser(null)
+      console.log(error)
+    }
+  }
+  const getOrders = async () => {
+    try {
+      const data = await getOrder()
       setUser(data)
     } catch (error) {
       setUser(null)
@@ -56,6 +71,7 @@ const App = () => {
     getUserProfile()
     getShopProfile()
     getDriver()
+    getOrder()
   }, [])
   return (
     <>
@@ -93,6 +109,10 @@ const App = () => {
           <Route
             path="/driver/driverSignup"
             element={<DriverSignup getDriverProfile={getDriverProfile} />}
+          />
+          <Route
+            path="/order/createOrder"
+            element={<CreateOrder getOrders={getOrders} />}
           />
         </Routes>
       </main>
