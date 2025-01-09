@@ -15,28 +15,32 @@ export const signIn = async (data) => {
 }
 
 export const shopSignUp = async (data) => {
-  const response = await client.post('/shop/shopSignup', data)
+  const response = await client.post('/shops/shopSignup', data)
   const token = response.data.token
   localStorage.setItem('authToken', token)
   return response.data
 }
 
 export const shopSignIn = async (data) => {
-  const response = await client.post('/shop/shopSignin', data)
+  const response = await client.post('/shops/shopSignin', data)
   const token = response.data.token
+  const role = response.data.role
   localStorage.setItem('authToken', token)
+  localStorage.setItem('role', role)
+  console.log(response.data.role)
+
   return response.data
 }
 
 export const driverSignUp = async (data) => {
-  const response = await client.post('/driver/driverSignup', data)
+  const response = await client.post('/drivers/driverSignup', data)
   const token = response.data.token
   localStorage.setItem('authToken', token)
   return response.data
 }
 
 export const driverSignIn = async (data) => {
-  const response = await client.post('/driver/driverSignin', data)
+  const response = await client.post('/drivers/driverSignin', data)
   const token = response.data.token
   localStorage.setItem('authToken', token)
   return response.data

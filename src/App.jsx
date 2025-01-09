@@ -12,12 +12,13 @@ import ShopSignup from './pages/ShopSignup'
 import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
 import { useEffect, useState } from 'react'
-import { getProfile } from './Services/userService'
+import { getProfile, getShops } from './Services/userService'
 import { getShop } from './Services/userService'
 import { getDriver } from './Services/userService'
 
 const App = () => {
   const [user, setUser] = useState(null)
+  const [shops, setShops] = useState([])
   const getUserProfile = async () => {
     try {
       const data = await getProfile()
@@ -29,6 +30,7 @@ const App = () => {
   }
   const logOut = () => {
     localStorage.removeItem('authToken')
+    localStorage.removeItem('role')
     setUser(null)
   }
 
@@ -51,11 +53,22 @@ const App = () => {
       console.log(error)
     }
   }
+  //get shops list from getShop
+
+  const getShopsList = async () => {
+    try {
+      const shopsList = await getShops()
+      setShops(shopsList)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    getUserProfile()
+    //getUserProfile()
     getShopProfile()
-    getDriver()
+    //getDriver()
+    getShopsList()
   }, [])
   return (
     <>
@@ -66,9 +79,8 @@ const App = () => {
         <h1>Delivery App</h1>
         <Routes>
           <Route path="/" element={<Home />} />
-
-          <Route path="/driver" element={<Driver />} />
-
+          if (localStorage.getItem('role') === 'driver')(
+          <Route path="/driver" element={<Driver shops={shops} />} />)
           <Route
             path="/auth/bananaSignin"
             element={<Signin getUserProfile={getUserProfile} />}
@@ -78,14 +90,13 @@ const App = () => {
             element={<Signup getUserProfile={getUserProfile} />}
           />
           <Route
-            path="/shop/shopSignin"
+            path="/shops/shopSignin"
             element={<ShopSignin getShopProfile={getShopProfile} />}
           />
           <Route
-            path="/shop/shopSignup"
+            path="/shops/shopSignup"
             element={<ShopSignup getShopProfile={getShopProfile} />}
           />
-
           <Route
             path="/driver/driverSignin"
             element={<DriverSignin getDriverProfile={getDriverProfile} />}
@@ -94,6 +105,7 @@ const App = () => {
             path="/driver/driverSignup"
             element={<DriverSignup getDriverProfile={getDriverProfile} />}
           />
+          <Route path="/logout" element={<Home logOut={logOut} />} />
         </Routes>
       </main>
     </>
