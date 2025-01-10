@@ -6,7 +6,7 @@ const initialFormData = {
   shopUserName: '',
   password: ''
 }
-const ShopSignin = ({ getShopProfile }) => {
+const ShopSignin = ({ setRole }) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -19,9 +19,10 @@ const ShopSignin = ({ getShopProfile }) => {
     e.preventDefault()
     try {
       await shopSignIn(formData)
-      await getShopProfile()
+      //await getShopProfile()
+      setRole('Shop')
       setFormData(initialFormData)
-      navigate('/')
+      navigate('/shop')
     } catch (error) {
       setMessage(error.response?.data?.error)
     }

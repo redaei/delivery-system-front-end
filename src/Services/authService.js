@@ -10,7 +10,9 @@ export const signUp = async (data) => {
 export const signIn = async (data) => {
   const response = await client.post('/auth/bananaSignin', data)
   const token = response.data.token
+
   localStorage.setItem('authToken', token)
+
   return response.data
 }
 
@@ -24,10 +26,8 @@ export const shopSignUp = async (data) => {
 export const shopSignIn = async (data) => {
   const response = await client.post('/shops/shopSignin', data)
   const token = response.data.token
-  const role = response.data.role
+
   localStorage.setItem('authToken', token)
-  localStorage.setItem('role', role)
-  console.log(response.data.role)
 
   return response.data
 }
@@ -42,11 +42,13 @@ export const driverSignUp = async (data) => {
 export const driverSignIn = async (data) => {
   const response = await client.post('/drivers/driverSignin', data)
   const token = response.data.token
+
   localStorage.setItem('authToken', token)
+
   return response.data
 }
 
 export const createOrder = async (data) => {
-  const response = await client.post('/order/createOrder', data)
+  const response = await client.post('/orders/createOrder', data)
   return response.data
 }

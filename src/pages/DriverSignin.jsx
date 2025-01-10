@@ -6,7 +6,7 @@ const initialFormData = {
   driverUserName: '',
   password: ''
 }
-const DriverSignin = ({ getDriverProfile }) => {
+const DriverSignin = ({ setRole }) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -19,9 +19,10 @@ const DriverSignin = ({ getDriverProfile }) => {
     e.preventDefault()
     try {
       await driverSignIn(formData)
-      await getDriverProfile()
+      //await getDriverProfile()
+      setRole('Driver')
       setFormData(initialFormData)
-      navigate('/')
+      navigate('/driver')
     } catch (error) {
       setMessage(error.response?.data?.error)
     }

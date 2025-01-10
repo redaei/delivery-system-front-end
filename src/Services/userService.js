@@ -21,6 +21,6 @@ export const getDriver = async () => {
 }
 
 export const getOrder = async () => {
-  const response = await client.get('/order/orders')
+  const response = await client.get('/orders')
   return response.data
 }
