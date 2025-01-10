@@ -1,4 +1,10 @@
-import { Route, Routes } from 'react-router-dom'
+import {
+  Navigate,
+  redirect,
+  Route,
+  Routes,
+  useNavigate
+} from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Nav from './components/Nav'
@@ -13,16 +19,21 @@ import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
 import CreateOrder from './pages/CreateOrder'
 import { useEffect, useState } from 'react'
-import { getProfile } from './Services/userService'
+import { getProfile, getShops } from './Services/userService'
 import { getShop } from './Services/userService'
 import { getDriver } from './Services/userService'
 
 import { getOrder } from './Services/userService'
-
+import Shop from './pages/Shop'
+import ShopRoutes from './components/ShopRoutes'
+import Logout from './components/Logout'
+import DriverRoutes from './components/DriverRoutes'
 
 const App = () => {
   const [user, setUser] = useState(null)
   const [order, setOrder] = useState(null)
+  const [role, setRole] = useState(null)
+  const [shops, setShops] = useState([])
 
   const getUserProfile = async () => {
     try {
@@ -41,10 +52,6 @@ const App = () => {
       setUser(null)
       console.log(error)
     }
-  }
-  const logOut = () => {
-    localStorage.removeItem('authToken')
-    setUser(null)
   }
 
   const getShopProfile = async () => {
@@ -67,11 +74,21 @@ const App = () => {
     }
   }
 
+  const getShopsList = async () => {
+    try {
+      const shopsList = await getShops()
+      setShops(shopsList)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    getUserProfile()
-    getShopProfile()
-    getDriver()
-    getOrder()
+    //getUserProfile()
+    //getShopProfile()
+    //getDriver()
+    getShopsList()
+    //getOrder()
   }, [])
   return (
     <>
@@ -79,15 +96,15 @@ const App = () => {
         <Nav />
       </header>
       <main>
-        <h1>Delivery App</h1>
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <h2>Delivery App</h2>
+        <h3>{role === null ? 'Not Logged in!' : role}</h3>
 
-          <Route path="/driver" element={<Driver />} />
+        <Routes>
+          <Route path="/" element={<Home role={role} />} />
 
           <Route
             path="/auth/bananaSignin"
-            element={<Signin getUserProfile={getUserProfile} />}
+            element={<Signin setRole={setRole} />}
           />
           <Route
             path="/auth/bananaSignup"
@@ -95,24 +112,33 @@ const App = () => {
           />
           <Route
             path="/shop/shopSignin"
-            element={<ShopSignin getShopProfile={getShopProfile} />}
+            element={<ShopSignin setRole={setRole} />}
           />
           <Route
             path="/shop/shopSignup"
             element={<ShopSignup getShopProfile={getShopProfile} />}
           />
-
           <Route
             path="/driver/driverSignin"
-            element={<DriverSignin getDriverProfile={getDriverProfile} />}
+            element={<DriverSignin setRole={setRole} />}
           />
           <Route
             path="/driver/driverSignup"
             element={<DriverSignup getDriverProfile={getDriverProfile} />}
           />
+          <Route path="/" element={<DriverRoutes role={role} />}>
+            <Route path="/driver" element={<Driver shops={shops} />} />
+          </Route>
+          <Route path="/" element={<ShopRoutes role={role} />}>
+            <Route path="/shop" element={<Shop shops={shops} />} />
+            <Route
+              path="/order/createOrder"
+              element={<CreateOrder getOrders={getOrders} />}
+            />
+          </Route>
           <Route
-            path="/order/createOrder"
-            element={<CreateOrder getOrders={getOrders} />}
+            path="/logout"
+            element={<Logout setRole={setRole} setUser={setUser} />}
           />
         </Routes>
       </main>

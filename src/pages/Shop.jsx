@@ -1,17 +1,14 @@
-import { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 
-const Driver = ({ shops }) => {
-  // const [activeTab, setActiveTab] = useState('in-progress-tab')
-  // const handleSelect = (tab) => {
-  //   setActiveTab(tab)
-  // }
-
+const Shop = ({ shops }) => {
   return (
     <>
-      <h1>Driver</h1>
-
+      <h2>Shop Page:</h2>
+      <h3>{shops[0].shopUserName}</h3>
+      <form action="/order/createOrder">
+        <input type="submit" value="New Order" />
+      </form>
       <Tabs>
         <TabList>
           <Tab>In Progress</Tab>
@@ -39,4 +36,4 @@ const Driver = ({ shops }) => {
   )
 }
 
-export default Driver
+export default Shop
