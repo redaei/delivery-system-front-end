@@ -48,7 +48,6 @@ const App = () => {
     try {
       const ordersList = await getOrdersList(role)
       setOrders(ordersList)
-
     } catch (error) {
       setOrder(null)
       console.log(error)
@@ -87,26 +86,23 @@ const App = () => {
   const getDriversList = async () => {
     try {
       const driversList = await getAllDrivers()
+
       setDrivers(driversList)
     } catch (error) {
       console.log(error)
     }
   }
 
-
   const logOut = () => {
-    localStorage.removeItem('authToken')
+    localStorage.clear()
     setRole(null)
     setUser(null)
   }
 
   useEffect(() => {
-    if (role === 'Admin') {
-      getOrders()
-      getShopsList()
-      getDriversList()
-    }
-
+    //getOrders()
+    // getShopsList()
+    // getDriversList()
   }, [])
 
   return (
@@ -164,11 +160,18 @@ const App = () => {
                   orders={orders}
                   getOrders={getOrders}
                   getDriversList={getDriversList}
-
                 />
               }
             />
-            <Route path="/order/createOrder" element={<CreateOrder drivers={drivers} user={user} />} />
+            <Route
+              path="/order/createOrder"
+              element={
+                <CreateOrder
+                  drivers={drivers}
+                  getDriversList={getDriversList}
+                />
+              }
+            />
           </Route>
         </Routes>
       </main>

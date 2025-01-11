@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { createOrder } from '../Services/authService'
-import Driver from './Driver'
 
 const initialFormData = {
   description: '',
@@ -9,14 +8,15 @@ const initialFormData = {
   driverId: ''
 }
 
-const CreateOrder = ({ drivers }) => {
-
+const CreateOrder = ({ drivers, getDriversList }) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
+  const [driver, setDriver] = useState('')
   const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    console.log(formData)
   }
 
   const isFormInvalid = () => {
@@ -26,6 +26,13 @@ const CreateOrder = ({ drivers }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      formData.shopId = localStorage.getItem('userId')
+
+      if (!formData.driverId) {
+        return
+      }
+      console.log('submited: ', formData)
+
       await createOrder(formData)
       setFormData(initialFormData)
       navigate('/shop')
@@ -35,13 +42,17 @@ const CreateOrder = ({ drivers }) => {
     }
   }
 
+  useEffect(() => {
+    getDriversList()
+  }, [])
+
   return (
     <main>
       <h1>New order</h1>
       <p style={{ color: 'red' }}>{message}</p>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="description">description:</label>
+          <label htmlFor="description">Package description:</label>
           <input
             type="text"
             id="description"
@@ -50,30 +61,25 @@ const CreateOrder = ({ drivers }) => {
             onChange={handleChange}
           />
         </div>
-        {/* <div>
-          <label htmlFor="shopId" hidden={true}>
-            user ID
-          </label>
-          <input
-            type="text"
-            id="shopId"
-            value={user._id}
-            name="shopId"
-            onChange={handleChange}
-            hidden={true}
-          />
-        </div>*/}
         <div>
-          <label htmlFor="driverId">choose a driver</label>
-
-          <select onChange={handleChange} name="driverId">
-                       {' '}
+          <label htmlFor="driverId">Choose a driver:</label>
+          <select
+            id="driverId"
+            name="driverId"
+            value={formData.driverId}
+            onChange={handleChange}
+          >
+            <option value=""> </option>
             {drivers.map((driver) => (
-              <option id="driverId" key={driver._id} value={driver._id}>
-                                {driver.driverName}             {' '}
+              <option
+                id="driverId"
+                name="driverId"
+                key={driver._id}
+                value={driver._id}
+              >
+                {driver.driverName} - BD{driver.deliveryPrice}
               </option>
             ))}
-                     {' '}
           </select>
         </div>
 

@@ -26,7 +26,7 @@ export const getDriver = async () => {
 
 export const getAllDrivers = async () => {
   const response = await client.get('/drivers')
- return response.data
+  return response.data.drivers
 }
 
 export const getOrder = async () => {
