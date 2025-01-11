@@ -10,7 +10,6 @@ const initialFormData = {
 }
 
 const CreateOrder = ({ drivers }) => {
-
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -67,10 +66,10 @@ const CreateOrder = ({ drivers }) => {
           <label htmlFor="driverId">choose a driver</label>
 
           <select onChange={handleChange} name="driverId">
-                       {' '}
+            {' '}
             {drivers.map((driver) => (
               <option id="driverId" key={driver._id} value={driver._id}>
-                                {driver.driverName}             {' '}
+                                {driver.driverName}{' '}
               </option>
             ))}
                      {' '}

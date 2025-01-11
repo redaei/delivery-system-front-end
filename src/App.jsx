@@ -13,7 +13,9 @@ import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
 import CreateOrder from './pages/CreateOrder'
 import { useEffect, useState } from 'react'
-
+import ShowAdmin from './pages/ShowAdmins'
+import View from './pages/view'
+import DriverView from './pages/DriverView'
 import {
   getAllDrivers,
   getAllShops,
@@ -34,6 +36,7 @@ const App = () => {
   const [role, setRole] = useState(null)
   const [shops, setShops] = useState([])
   const [drivers, setDrivers] = useState([])
+  const [edit, setEdit] = useState(null)
 
   const getUserProfile = async () => {
     try {
@@ -48,7 +51,6 @@ const App = () => {
     try {
       const ordersList = await getOrdersList(role)
       setOrders(ordersList)
-
     } catch (error) {
       setOrder(null)
       console.log(error)
@@ -93,7 +95,6 @@ const App = () => {
     }
   }
 
-
   const logOut = () => {
     localStorage.removeItem('authToken')
     setRole(null)
@@ -101,12 +102,16 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (role === 'Admin') {
+    /*if (role === 'Admin') {
       getOrders()
       getShopsList()
       getDriversList()
-    }
-
+    }*/
+    getOrders()
+    getShopsList()
+    getDriversList()
+    getOrders()
+    getOrdersList()
   }, [])
 
   return (
@@ -164,12 +169,29 @@ const App = () => {
                   orders={orders}
                   getOrders={getOrders}
                   getDriversList={getDriversList}
-
                 />
               }
             />
-            <Route path="/order/createOrder" element={<CreateOrder drivers={drivers} user={user} />} />
+            <Route
+              path="/order/createOrder"
+              element={<CreateOrder drivers={drivers} user={user} />}
+            />
+            <Route
+              path="/admin"
+              element={
+                <ShowAdmin
+                  getDriversList={getDriversList}
+                  getShopsList={getShopsList}
+                  drivers={drivers}
+                  shops={shops}
+                  edit={edit}
+                  setEdit={setEdit}
+                />
+              }
+            />
           </Route>
+          <Route path="/editShop" element={<View edit={edit} />} />
+          <Route path="/editDriver" element={<DriverView edit={edit} />} />
         </Routes>
       </main>
     </>
