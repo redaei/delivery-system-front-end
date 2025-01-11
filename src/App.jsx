@@ -19,7 +19,7 @@ import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
 import CreateOrder from './pages/CreateOrder'
 import { useEffect, useState } from 'react'
-import { getProfile, getShops } from './Services/userService'
+import { getProfile, getShops, getDrivers } from './Services/userService'
 import { getShop } from './Services/userService'
 import { getDriver } from './Services/userService'
 
@@ -34,6 +34,7 @@ const App = () => {
   const [order, setOrder] = useState(null)
   const [role, setRole] = useState(null)
   const [shops, setShops] = useState([])
+  const [drivers, setDrivers] = useState([])
 
   const getUserProfile = async () => {
     try {
@@ -47,9 +48,10 @@ const App = () => {
   const getOrders = async () => {
     try {
       const data = await getOrder()
-      setUser(data)
+      setOrder(data)
+      console.log(order)
     } catch (error) {
-      setUser(null)
+      setOrder(null)
       console.log(error)
     }
   }
@@ -82,13 +84,22 @@ const App = () => {
       console.log(error)
     }
   }
+  const getDriverList = async () => {
+    try {
+      const driversList = await getDrivers()
+      setDrivers(driversList)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    //getUserProfile()
-    //getShopProfile()
-    //getDriver()
+    getUserProfile()
+    getShopProfile()
+    getDriver()
     getShopsList()
-    //getOrder()
+    getOrder()
+    getDriverList()
   }, [])
   return (
     <>
@@ -116,7 +127,12 @@ const App = () => {
           />
           <Route
             path="/shop/shopSignup"
-            element={<ShopSignup getShopProfile={getShopProfile} />}
+            element={
+              <ShopSignup
+                getShopProfile={getShopProfile}
+                getOrders={getOrders}
+              />
+            }
           />
           <Route
             path="/driver/driverSignin"
@@ -130,10 +146,27 @@ const App = () => {
             <Route path="/driver" element={<Driver shops={shops} />} />
           </Route>
           <Route path="/" element={<ShopRoutes role={role} />}>
-            <Route path="/shop" element={<Shop shops={shops} />} />
+            <Route
+              path="/shop"
+              element={
+                <Shop
+                  shops={shops}
+                  drivers={drivers}
+                  order={order}
+                  setOrder={setOrder}
+                  getOrders={getOrders}
+                />
+              }
+            />
             <Route
               path="/order/createOrder"
-              element={<CreateOrder getOrders={getOrders} />}
+              element={
+                <CreateOrder
+                  getOrders={getOrders}
+                  drivers={drivers}
+                  user={user}
+                />
+              }
             />
           </Route>
           <Route

@@ -49,6 +49,6 @@ export const driverSignIn = async (data) => {
 }
 
 export const createOrder = async (data) => {
-  const response = await client.post('/orders/createOrder', data)
+  const response = await client.post('/orders', data)
   return response.data
 }
