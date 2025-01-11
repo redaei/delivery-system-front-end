@@ -5,7 +5,7 @@ import { createOrder } from '../Services/authService'
 const initialFormData = {
   description: ''
 }
-const CreateOrder = ({ getOrders }) => {
+const CreateOrder = () => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -22,9 +22,8 @@ const CreateOrder = ({ getOrders }) => {
     e.preventDefault()
     try {
       await createOrder(formData)
-      await getOrders()
       setFormData(initialFormData)
-      navigate('/')
+      navigate('/shop')
     } catch (error) {
       setMessage(error.response?.data?.error)
       console.log(error)
