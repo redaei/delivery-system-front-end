@@ -63,6 +63,7 @@ const ShopSignin = ({ setRole }) => {
           </Link>
         </section>
       </form>
+      <Link to="/shop/shopSignup">Create Shop Profile</Link>
     </main>
   )
 }

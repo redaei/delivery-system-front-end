@@ -28,6 +28,7 @@ import { getDriver } from './Services/userService'
 import Shop from './pages/Shop'
 import ShopRoutes from './components/ShopRoutes'
 import DriverRoutes from './components/DriverRoutes'
+import AdminRoutes from './components/AdminRoutes'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -89,6 +90,7 @@ const App = () => {
   const getDriversList = async () => {
     try {
       const driversList = await getAllDrivers()
+
       setDrivers(driversList)
     } catch (error) {
       console.log(error)
@@ -96,17 +98,12 @@ const App = () => {
   }
 
   const logOut = () => {
-    localStorage.removeItem('authToken')
+    localStorage.clear()
     setRole(null)
     setUser(null)
   }
 
   useEffect(() => {
-    /*if (role === 'Admin') {
-      getOrders()
-      getShopsList()
-      getDriversList()
-    }*/
     getOrders()
     getShopsList()
     getDriversList()
@@ -155,6 +152,21 @@ const App = () => {
             path="/driver/driverSignup"
             element={<DriverSignup getDriverProfile={getDriverProfile} />}
           />
+          <Route path="/" element={<AdminRoutes role={role} />}>
+            <Route
+              path="/admin"
+              element={
+                <ShowAdmin
+                  getDriversList={getDriversList}
+                  getShopsList={getShopsList}
+                  drivers={drivers}
+                  shops={shops}
+                  edit={edit}
+                  setEdit={setEdit}
+                />
+              }
+            />
+          </Route>
           <Route path="/" element={<DriverRoutes role={role} />}>
             <Route
               path="/driver"
@@ -174,18 +186,10 @@ const App = () => {
             />
             <Route
               path="/order/createOrder"
-              element={<CreateOrder drivers={drivers} user={user} />}
-            />
-            <Route
-              path="/admin"
               element={
-                <ShowAdmin
-                  getDriversList={getDriversList}
-                  getShopsList={getShopsList}
+                <CreateOrder
                   drivers={drivers}
-                  shops={shops}
-                  edit={edit}
-                  setEdit={setEdit}
+                  getDriversList={getDriversList}
                 />
               }
             />

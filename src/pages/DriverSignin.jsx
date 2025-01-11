@@ -62,6 +62,7 @@ const DriverSignin = ({ setRole }) => {
           </Link>
         </section>
       </form>
+      <Link to="/driver/driverSignup">Create Driver Profile</Link>
     </main>
   )
 }

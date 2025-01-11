@@ -61,6 +61,7 @@ const Signin = ({ getUserProfile }) => {
           </Link>
         </section>
       </form>
+      <Link to="/auth/bananaSignup">Sign Up</Link>
     </main>
   )
 }

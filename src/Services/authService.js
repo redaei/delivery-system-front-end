@@ -10,8 +10,10 @@ export const signUp = async (data) => {
 export const signIn = async (data) => {
   const response = await client.post('/auth/bananaSignin', data)
   const token = response.data.token
+  const userId = response.data.userId
 
   localStorage.setItem('authToken', token)
+  localStorage.setItem('userId', userId)
 
   return response.data
 }
@@ -26,8 +28,10 @@ export const shopSignUp = async (data) => {
 export const shopSignIn = async (data) => {
   const response = await client.post('/shops/shopSignin', data)
   const token = response.data.token
+  const userId = response.data.userId
 
   localStorage.setItem('authToken', token)
+  localStorage.setItem('userId', userId)
 
   return response.data
 }
@@ -42,8 +46,10 @@ export const driverSignUp = async (data) => {
 export const driverSignIn = async (data) => {
   const response = await client.post('/drivers/driverSignin', data)
   const token = response.data.token
+  const userId = response.data.userId
 
   localStorage.setItem('authToken', token)
+  localStorage.setItem('userId', userId)
 
   return response.data
 }
