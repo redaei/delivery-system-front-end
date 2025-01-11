@@ -21,6 +21,7 @@ const ShopSignin = ({ setRole }) => {
       await shopSignIn(formData)
       //await getShopProfile()
       setRole('Shop')
+
       setFormData(initialFormData)
       navigate('/shop')
     } catch (error) {

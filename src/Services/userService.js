@@ -14,7 +14,11 @@ export const getShops = async () => {
 
   return response.data.shops
 }
+export const getDrivers = async () => {
+  const response = await client.get('/drivers')
 
+  return response.data.drivers
+}
 export const getDriver = async () => {
   const response = await client.get('/drivers/driverProfile')
   return response.data

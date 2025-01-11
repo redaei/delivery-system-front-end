@@ -1,7 +1,7 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
-
-const Shop = ({ shops }) => {
+import CreateOrder from './CreateOrder'
+const Shop = ({ shops, drivers }) => {
   return (
     <>
       <h2>Shop Page:</h2>
@@ -27,6 +27,12 @@ const Shop = ({ shops }) => {
         </TabPanel>
         <TabPanel>
           <h2>Tab: New Requests</h2>
+          {drivers.map((driver) => (
+            <div key={driver._id}>
+              <h2>{driver.driverUserName}</h2>
+              <p>{driver.price}</p>
+            </div>
+          ))}
         </TabPanel>
         <TabPanel>
           <h2>Tab: Delivered</h2>

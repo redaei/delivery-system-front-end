@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { createOrder } from '../Services/authService'
+import Driver from './Driver'
 
 const initialFormData = {
-  description: ''
+  description: '',
+  shopId: ''
 }
-const CreateOrder = ({ getOrders }) => {
+const CreateOrder = ({ getOrders, drivers, user }) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -30,6 +32,7 @@ const CreateOrder = ({ getOrders }) => {
       console.log(error)
     }
   }
+
   return (
     <main>
       <h1>New order</h1>
@@ -44,6 +47,30 @@ const CreateOrder = ({ getOrders }) => {
             name="description"
             onChange={handleChange}
           />
+        </div>
+        {/* <div>
+          <label htmlFor="shopId" hidden={true}>
+            user ID
+          </label>
+          <input
+            type="text"
+            id="shopId"
+            value={user._id}
+            name="shopId"
+            onChange={handleChange}
+            hidden={true}
+          />
+        </div>*/}
+        <div>
+          <label htmlFor="driverId">choose a driver</label>
+
+          <select>
+            {drivers.map((driver) => (
+              <option id="driverId" key={driver._id} value={driver._id}>
+                {driver.driverName}
+              </option>
+            ))}
+          </select>
         </div>
 
         <section>
