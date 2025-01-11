@@ -8,7 +8,9 @@ const initialFormData = {
   shopId: '',
   driverId: ''
 }
-const CreateOrder = ({ getOrders, drivers, user }) => {
+
+const CreateOrder = ({ drivers }) => {
+
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -25,9 +27,8 @@ const CreateOrder = ({ getOrders, drivers, user }) => {
     e.preventDefault()
     try {
       await createOrder(formData)
-      await getOrders()
       setFormData(initialFormData)
-      navigate('/')
+      navigate('/shop')
     } catch (error) {
       setMessage(error.response?.data?.error)
       console.log(error)

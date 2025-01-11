@@ -1,10 +1,4 @@
-import {
-  Navigate,
-  redirect,
-  Route,
-  Routes,
-  useNavigate
-} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Nav from './components/Nav'
@@ -19,19 +13,24 @@ import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
 import CreateOrder from './pages/CreateOrder'
 import { useEffect, useState } from 'react'
-import { getProfile, getShops, getDrivers } from './Services/userService'
+
+import {
+  getAllDrivers,
+  getAllShops,
+  getOrdersList,
+  getProfile
+} from './Services/userService'
+
 import { getShop } from './Services/userService'
 import { getDriver } from './Services/userService'
-
-import { getOrder } from './Services/userService'
 import Shop from './pages/Shop'
 import ShopRoutes from './components/ShopRoutes'
-import Logout from './components/Logout'
 import DriverRoutes from './components/DriverRoutes'
 
 const App = () => {
   const [user, setUser] = useState(null)
   const [order, setOrder] = useState(null)
+  const [orders, setOrders] = useState([])
   const [role, setRole] = useState(null)
   const [shops, setShops] = useState([])
   const [drivers, setDrivers] = useState([])
@@ -47,9 +46,9 @@ const App = () => {
   }
   const getOrders = async () => {
     try {
-      const data = await getOrder()
-      setOrder(data)
-      console.log(order)
+      const ordersList = await getOrdersList(role)
+      setOrders(ordersList)
+
     } catch (error) {
       setOrder(null)
       console.log(error)
@@ -78,33 +77,42 @@ const App = () => {
 
   const getShopsList = async () => {
     try {
-      const shopsList = await getShops()
+      const shopsList = await getAllShops()
       setShops(shopsList)
     } catch (error) {
       console.log(error)
     }
   }
-  const getDriverList = async () => {
+
+  const getDriversList = async () => {
     try {
-      const driversList = await getDrivers()
+      const driversList = await getAllDrivers()
       setDrivers(driversList)
     } catch (error) {
       console.log(error)
     }
   }
 
+
+  const logOut = () => {
+    localStorage.removeItem('authToken')
+    setRole(null)
+    setUser(null)
+  }
+
   useEffect(() => {
-    getUserProfile()
-    getShopProfile()
-    getDriver()
-    getShopsList()
-    getOrder()
-    getDriverList()
+    if (role === 'Admin') {
+      getOrders()
+      getShopsList()
+      getDriversList()
+    }
+
   }, [])
+
   return (
     <>
       <header>
-        <Nav />
+        <Nav role={role} handleLogOut={logOut} />
       </header>
       <main>
         <h2>Delivery App</h2>
@@ -143,36 +151,25 @@ const App = () => {
             element={<DriverSignup getDriverProfile={getDriverProfile} />}
           />
           <Route path="/" element={<DriverRoutes role={role} />}>
-            <Route path="/driver" element={<Driver shops={shops} />} />
+            <Route
+              path="/driver"
+              element={<Driver orders={orders} getOrders={getOrders} />}
+            />
           </Route>
           <Route path="/" element={<ShopRoutes role={role} />}>
             <Route
               path="/shop"
               element={
                 <Shop
-                  shops={shops}
-                  drivers={drivers}
-                  order={order}
-                  setOrder={setOrder}
+                  orders={orders}
                   getOrders={getOrders}
+                  getDriversList={getDriversList}
+
                 />
               }
             />
-            <Route
-              path="/order/createOrder"
-              element={
-                <CreateOrder
-                  getOrders={getOrders}
-                  drivers={drivers}
-                  user={user}
-                />
-              }
-            />
+            <Route path="/order/createOrder" element={<CreateOrder drivers={drivers} user={user} />} />
           </Route>
-          <Route
-            path="/logout"
-            element={<Logout setRole={setRole} setUser={setUser} />}
-          />
         </Routes>
       </main>
     </>
