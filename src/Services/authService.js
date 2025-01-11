@@ -53,3 +53,25 @@ export const createOrder = async (data) => {
 
   return response.data
 }
+
+export const approveShop = async (data) => {
+  const newStatus = { status: true }
+  const response = await client.put(`/shops/${data}`, newStatus)
+  return response.data
+}
+
+export const deleteShop = async (data) => {
+  const response = await client.delete(`/shops/${data}`)
+  return response.data
+}
+
+export const approveDriver = async (data) => {
+  const newStatus = { status: true }
+  const response = await client.put(`/drivers/${data}`, newStatus)
+  return response.data
+}
+
+export const deleteDriver = async (data) => {
+  const response = await client.delete(`/drivers/${data}`)
+  return response.data
+}
