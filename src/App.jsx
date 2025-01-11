@@ -104,11 +104,11 @@ const App = () => {
   }
 
   useEffect(() => {
-    getOrders()
-    getShopsList()
-    getDriversList()
-    getOrders()
-    getOrdersList()
+    // getOrders()
+    // getShopsList()
+    // getDriversList()
+    // getOrders()
+    // getOrdersList()
   }, [])
 
   return (
