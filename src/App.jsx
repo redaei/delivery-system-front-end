@@ -13,7 +13,9 @@ import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
 import CreateOrder from './pages/CreateOrder'
 import { useEffect, useState } from 'react'
-
+import ShowAdmin from './pages/ShowAdmins'
+import View from './pages/view'
+import DriverView from './pages/DriverView'
 import {
   getAllDrivers,
   getAllShops,
@@ -26,6 +28,7 @@ import { getDriver } from './Services/userService'
 import Shop from './pages/Shop'
 import ShopRoutes from './components/ShopRoutes'
 import DriverRoutes from './components/DriverRoutes'
+import AdminRoutes from './components/AdminRoutes'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -34,6 +37,7 @@ const App = () => {
   const [role, setRole] = useState(null)
   const [shops, setShops] = useState([])
   const [drivers, setDrivers] = useState([])
+  const [edit, setEdit] = useState(null)
 
   const getUserProfile = async () => {
     try {
@@ -100,9 +104,11 @@ const App = () => {
   }
 
   useEffect(() => {
-    //getOrders()
-    // getShopsList()
-    // getDriversList()
+    getOrders()
+    getShopsList()
+    getDriversList()
+    getOrders()
+    getOrdersList()
   }, [])
 
   return (
@@ -146,6 +152,21 @@ const App = () => {
             path="/driver/driverSignup"
             element={<DriverSignup getDriverProfile={getDriverProfile} />}
           />
+          <Route path="/" element={<AdminRoutes role={role} />}>
+            <Route
+              path="/admin"
+              element={
+                <ShowAdmin
+                  getDriversList={getDriversList}
+                  getShopsList={getShopsList}
+                  drivers={drivers}
+                  shops={shops}
+                  edit={edit}
+                  setEdit={setEdit}
+                />
+              }
+            />
+          </Route>
           <Route path="/" element={<DriverRoutes role={role} />}>
             <Route
               path="/driver"
@@ -173,6 +194,8 @@ const App = () => {
               }
             />
           </Route>
+          <Route path="/editShop" element={<View edit={edit} />} />
+          <Route path="/editDriver" element={<DriverView edit={edit} />} />
         </Routes>
       </main>
     </>
