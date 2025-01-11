@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 
-const Shop = ({ orders, getOrders, getDriversList }) => {
+const Shop = ({ orders, getOrders }) => {
+  
   useEffect(() => {
     getOrders()
-    getDriversList()
   }, [])
+
   return (
     <>
       <h2>Shop Page:</h2>

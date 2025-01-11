@@ -13,12 +13,14 @@ import DriverSignup from './pages/DriverSignup'
 import DriverSignin from './pages/DriverSignin'
 import CreateOrder from './pages/CreateOrder'
 import { useEffect, useState } from 'react'
+
 import {
   getAllDrivers,
   getAllShops,
   getOrdersList,
   getProfile
 } from './Services/userService'
+
 import { getShop } from './Services/userService'
 import { getDriver } from './Services/userService'
 import Shop from './pages/Shop'
@@ -45,10 +47,10 @@ const App = () => {
   const getOrders = async () => {
     try {
       const ordersList = await getOrdersList(role)
-
       setOrders(ordersList)
+
     } catch (error) {
-      setUser(null)
+      setOrder(null)
       console.log(error)
     }
   }
@@ -81,6 +83,7 @@ const App = () => {
       console.log(error)
     }
   }
+
   const getDriversList = async () => {
     try {
       const driversList = await getAllDrivers()
@@ -89,6 +92,7 @@ const App = () => {
       console.log(error)
     }
   }
+
 
   const logOut = () => {
     localStorage.removeItem('authToken')
@@ -102,6 +106,7 @@ const App = () => {
       getShopsList()
       getDriversList()
     }
+
   }, [])
 
   return (
@@ -130,7 +135,12 @@ const App = () => {
           />
           <Route
             path="/shop/shopSignup"
-            element={<ShopSignup getShopProfile={getShopProfile} />}
+            element={
+              <ShopSignup
+                getShopProfile={getShopProfile}
+                getOrders={getOrders}
+              />
+            }
           />
           <Route
             path="/driver/driverSignin"
@@ -154,10 +164,11 @@ const App = () => {
                   orders={orders}
                   getOrders={getOrders}
                   getDriversList={getDriversList}
+
                 />
               }
             />
-            <Route path="/order/createOrder" element={<CreateOrder />} />
+            <Route path="/order/createOrder" element={<CreateOrder drivers={drivers} user={user} />} />
           </Route>
         </Routes>
       </main>

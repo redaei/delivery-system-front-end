@@ -5,6 +5,7 @@ const Nav = ({ handleLogOut, role }) => {
       <NavLink to="/">Home</NavLink>
       <NavLink to="/shop">Shop Home Page</NavLink>
       <NavLink to="/driver">Driver Home Page</NavLink>
+
       <NavLink to="/order/createOrder">Create Order</NavLink>
 
       {role && (
@@ -12,6 +13,7 @@ const Nav = ({ handleLogOut, role }) => {
           LogOut
         </NavLink>
       )}
+
     </nav>
   )
 }
