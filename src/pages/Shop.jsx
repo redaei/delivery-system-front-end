@@ -1,7 +1,7 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import CreateOrder from './CreateOrder'
-const Shop = ({ shops, drivers }) => {
+const Shop = ({ shops, drivers, order }) => {
   return (
     <>
       <h2>Shop Page:</h2>

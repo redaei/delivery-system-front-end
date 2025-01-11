@@ -48,9 +48,10 @@ const App = () => {
   const getOrders = async () => {
     try {
       const data = await getOrder()
-      setUser(data)
+      setOrder(data)
+      console.log(order)
     } catch (error) {
-      setUser(null)
+      setOrder(null)
       console.log(error)
     }
   }
@@ -126,7 +127,12 @@ const App = () => {
           />
           <Route
             path="/shop/shopSignup"
-            element={<ShopSignup getShopProfile={getShopProfile} />}
+            element={
+              <ShopSignup
+                getShopProfile={getShopProfile}
+                getOrders={getOrders}
+              />
+            }
           />
           <Route
             path="/driver/driverSignin"
@@ -142,7 +148,15 @@ const App = () => {
           <Route path="/" element={<ShopRoutes role={role} />}>
             <Route
               path="/shop"
-              element={<Shop shops={shops} drivers={drivers} />}
+              element={
+                <Shop
+                  shops={shops}
+                  drivers={drivers}
+                  order={order}
+                  setOrder={setOrder}
+                  getOrders={getOrders}
+                />
+              }
             />
             <Route
               path="/order/createOrder"

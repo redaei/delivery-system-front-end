@@ -5,7 +5,8 @@ import Driver from './Driver'
 
 const initialFormData = {
   description: '',
-  shopId: ''
+  shopId: '',
+  driverId: ''
 }
 const CreateOrder = ({ getOrders, drivers, user }) => {
   const [message, setMessage] = useState('')
@@ -64,12 +65,14 @@ const CreateOrder = ({ getOrders, drivers, user }) => {
         <div>
           <label htmlFor="driverId">choose a driver</label>
 
-          <select>
+          <select onChange={handleChange} name="driverId">
+                       {' '}
             {drivers.map((driver) => (
               <option id="driverId" key={driver._id} value={driver._id}>
-                {driver.driverName}
+                                {driver.driverName}             {' '}
               </option>
             ))}
+                     {' '}
           </select>
         </div>
 
