@@ -11,12 +11,11 @@ const initialFormData = {
 const CreateOrder = ({ drivers, getDriversList }) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
-  const [driver, setDriver] = useState('')
+  //const [driver, setDriver] = useState('')
   const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
-    console.log(formData)
   }
 
   const isFormInvalid = () => {
@@ -31,7 +30,13 @@ const CreateOrder = ({ drivers, getDriversList }) => {
       if (!formData.driverId) {
         return
       }
-      console.log('submited: ', formData)
+
+      const selectedDriver = drivers.find(
+        (driver) => driver._id === formData.driverId
+      )
+      if (selectedDriver) {
+        formData.deliveryPrice = selectedDriver.deliveryPrice
+      }
 
       await createOrder(formData)
       setFormData(initialFormData)
@@ -47,48 +52,51 @@ const CreateOrder = ({ drivers, getDriversList }) => {
   }, [])
 
   return (
-    <main>
-      <h1>New order</h1>
-      <p style={{ color: 'red' }}>{message}</p>
+    <main className="container mt-4">
+      <h3>New Order</h3>
+      <p className="text-danger">{message}</p>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="description">Package description:</label>
+        <div className="mb-3">
+          <label htmlFor="description" className="form-label">
+            Package Description:
+          </label>
           <input
             type="text"
             id="description"
-            value={formData.description}
             name="description"
+            value={formData.description}
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="driverId">Choose a driver:</label>
+        <div className="mb-3">
+          <label htmlFor="driverId" className="form-label">
+            Choose a Driver:
+          </label>
           <select
             id="driverId"
             name="driverId"
             value={formData.driverId}
             onChange={handleChange}
+            className="form-select"
           >
-            <option value=""> </option>
+            <option key="0" value="">
+              {''}
+            </option>
             {drivers.map((driver) => (
-              <option
-                id="driverId"
-                name="driverId"
-                key={driver._id}
-                value={driver._id}
-              >
+              <option key={driver._id} value={driver._id}>
                 {driver.driverName} - BD{driver.deliveryPrice}
               </option>
             ))}
           </select>
         </div>
-
-        <section>
-          <button disabled={isFormInvalid()}>Create Order</button>
-          <Link to="/">
-            <button>Cancel</button>
-          </Link>
-        </section>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={!formData.description || !formData.driverId}
+        >
+          Submit
+        </button>
       </form>
     </main>
   )

@@ -44,74 +44,94 @@ const DriverSignup = ({ getDriverProfile }) => {
   }
 
   return (
-    <main>
+    <main className="container mt-4">
       <h1>Sign Up</h1>
-      <p style={{ color: 'red' }}>{message}</p>
+      <p className="text-danger">{message}</p>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="driverUserName">Username:</label>
+        <div className="mb-3">
+          <label htmlFor="driverUserName" className="form-label">
+            Username:
+          </label>
           <input
             type="text"
             id="driverUserName"
             value={formData.driverUserName}
             name="driverUserName"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
           <input
             type="password"
             id="password"
             value={formData.password}
             name="password"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="confirm">Confirm Password:</label>
+        <div className="mb-3">
+          <label htmlFor="confirm" className="form-label">
+            Confirm Password:
+          </label>
           <input
             type="password"
             id="confirm"
             value={formData.passwordConf}
             name="passwordConf"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="driverName">Name:</label>
+        <div className="mb-3">
+          <label htmlFor="driverName" className="form-label">
+            Name:
+          </label>
           <input
             type="text"
             id="driverName"
             value={formData.driverName}
             name="driverName"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="phone">Number:</label>
+        <div className="mb-3">
+          <label htmlFor="phone" className="form-label">
+            Number:
+          </label>
           <input
             type="number"
             id="phone"
             value={formData.phone}
             name="phone"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="deliveryPrice">delivery Price:</label>
+        <div className="mb-3">
+          <label htmlFor="deliveryPrice" className="form-label">
+            delivery Price:
+          </label>
           <input
             type="number"
             id="deliveryPrice"
             value={formData.deliveryPrice}
             name="deliveryPrice"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
         <section>
-          <button disabled={isFormInvalid()}>Sign Up</button>
+          <button className="btn btn-primary" disabled={isFormInvalid()}>
+            Sign Up
+          </button>
           <Link to="/">
-            <button>Cancel</button>
+            <button className="btn btn-secondary">Cancel</button>
           </Link>
         </section>
       </form>

@@ -29,6 +29,7 @@ import Shop from './pages/Shop'
 import ShopRoutes from './components/ShopRoutes'
 import DriverRoutes from './components/DriverRoutes'
 import AdminRoutes from './components/AdminRoutes'
+import ViewOrder from './pages/ViewOrder'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -117,8 +118,8 @@ const App = () => {
         <Nav role={role} handleLogOut={logOut} />
       </header>
       <main>
-        <h2>Delivery App</h2>
-        <h3>{role === null ? 'Not Logged in!' : role}</h3>
+        <h4>Delivery App</h4>
+        <p>{role === null ? 'Not Logged in!' : role}</p>
 
         <Routes>
           <Route path="/" element={<Home role={role} />} />
@@ -154,7 +155,7 @@ const App = () => {
           />
           <Route path="/" element={<AdminRoutes role={role} />}>
             <Route
-              path="/admin"
+              path="/admins"
               element={
                 <ShowAdmin
                   getDriversList={getDriversList}
@@ -170,7 +171,13 @@ const App = () => {
           <Route path="/" element={<DriverRoutes role={role} />}>
             <Route
               path="/driver"
-              element={<Driver orders={orders} getOrders={getOrders} />}
+              element={
+                <Driver
+                  orders={orders}
+                  getOrders={getOrders}
+                  setOrder={setOrder}
+                />
+              }
             />
           </Route>
           <Route path="/" element={<ShopRoutes role={role} />}>
@@ -180,7 +187,7 @@ const App = () => {
                 <Shop
                   orders={orders}
                   getOrders={getOrders}
-                  getDriversList={getDriversList}
+                  setOrder={setOrder}
                 />
               }
             />
@@ -196,6 +203,10 @@ const App = () => {
           </Route>
           <Route path="/editShop" element={<View edit={edit} />} />
           <Route path="/editDriver" element={<DriverView edit={edit} />} />
+          <Route
+            path="/order/:id"
+            element={<ViewOrder order={order} role={role} />}
+          />
         </Routes>
       </main>
     </>

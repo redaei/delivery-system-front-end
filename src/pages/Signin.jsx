@@ -6,7 +6,7 @@ const initialFormData = {
   userName: '',
   password: ''
 }
-const Signin = ({ getUserProfile }) => {
+const Signin = ({ setRole }) => {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState(initialFormData)
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ const Signin = ({ getUserProfile }) => {
     e.preventDefault()
     try {
       await signIn(formData)
-      await getUserProfile()
+      setRole('Admin')
       setFormData(initialFormData)
       navigate('/')
     } catch (error) {

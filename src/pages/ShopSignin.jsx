@@ -30,12 +30,14 @@ const ShopSignin = ({ setRole }) => {
   }
 
   return (
-    <main>
+    <main className="container mt-4">
       <h1>Log In</h1>
-      <p style={{ color: 'red' }}>{message}</p>
+      <p className="text-danger">{message}</p>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="shopUserName">Username:</label>
+        <div className="mb-3">
+          <label htmlFor="shopUserName" className="form-label">
+            Username:
+          </label>
           <input
             type="text"
             autoComplete="off"
@@ -43,10 +45,13 @@ const ShopSignin = ({ setRole }) => {
             value={formData.shopUserName}
             name="shopUserName"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
           <input
             type="password"
             autoComplete="off"
@@ -54,12 +59,13 @@ const ShopSignin = ({ setRole }) => {
             value={formData.password}
             name="password"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
         <section>
-          <button>Log In</button>
+          <button className="btn btn-primary">Log In</button>
           <Link to="/">
-            <button>Cancel</button>
+            <button className="btn btn-secondary">Cancel</button>
           </Link>
         </section>
       </form>

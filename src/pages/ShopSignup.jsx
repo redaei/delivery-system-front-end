@@ -42,64 +42,81 @@ const ShopSignup = ({ getShopProfile }) => {
   }
 
   return (
-    <main>
+    <main className="container mt-4">
       <h1>Sign Up</h1>
-      <p style={{ color: 'red' }}>{message}</p>
+      <p className="text-danger">{message}</p>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="shopUserName">Username:</label>
+        <div className="mb-3">
+          <label htmlFor="shopUserName" className="form-label">
+            Username:
+          </label>
           <input
             type="text"
             id="shopUserName"
             value={formData.shopUserName}
             name="shopUserName"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
           <input
             type="password"
             id="password"
             value={formData.password}
             name="password"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="confirm">Confirm Password:</label>
+        <div className="mb-3">
+          <label htmlFor="confirm" className="form-label">
+            Confirm Password:
+          </label>
           <input
             type="password"
             id="confirm"
             value={formData.passwordConf}
             name="passwordConf"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="location">location:</label>
+        <div className="mb-3">
+          <label htmlFor="location" className="form-label">
+            location:
+          </label>
           <input
             type="text"
             id="location"
             value={formData.location}
             name="location"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
-        <div>
-          <label htmlFor="phone">Number:</label>
+        <div className="mb-3">
+          <label htmlFor="phone" className="form-label">
+            Number:
+          </label>
           <input
             type="number"
             id="phone"
             value={formData.phone}
             name="phone"
             onChange={handleChange}
+            className="form-control"
           />
         </div>
         <section>
-          <button disabled={isFormInvalid()}>Sign Up</button>
+          <button className="btn btn-primary" disabled={isFormInvalid()}>
+            Sign Up
+          </button>
           <Link to="/">
-            <button>Cancel</button>
+            <button className="btn btn-secondary">Cancel</button>
           </Link>
         </section>
       </form>
