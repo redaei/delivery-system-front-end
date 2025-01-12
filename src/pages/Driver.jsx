@@ -1,15 +1,16 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 
-const Driver = ({ orders, getOrders }) => {
+const Driver = ({ orders, getOrders, setOrder }) => {
   useEffect(() => {
     getOrders()
   }, [])
   return (
     <>
-      <h2>Shop Page:</h2>
-      <h3>{orders.length}</h3>
+      <h3>Driver Page:</h3>
+      <h5>total Orders: {orders.length}</h5>
 
       <Tabs>
         <TabList>
@@ -21,71 +22,138 @@ const Driver = ({ orders, getOrders }) => {
         </TabList>
 
         <TabPanel>
-          <h2>Tab: In Progress</h2>
           {orders.map(
             (order) =>
               order.orderStatus === 'Pending' && (
-                <div key={order._id}>
-                  <h3>{order.orderNumber}</h3>
-                  <p>{order.description}</p>
-                  <p>{order.shopId.shopUserName}</p>
-                  <p>{order.orderStatus}</p>
+                <div key={order._id} className="card mb-3">
+                  <div className="card-body">
+                    <Link
+                      to={`/order/${order.orderNumber}`}
+                      onClick={() => setOrder(order)}
+                    >
+                      <h4 className="card-title">
+                        Order Number: {order.orderNumber}
+                      </h4>
+                      <p className="card-text">
+                        {' '}
+                        Description: {order.description}
+                      </p>
+                      <p className="card-text">
+                        Shop Name: {order.shopId.shopUserName}
+                      </p>
+                      <p className="card-text">
+                        Order status: {order.orderStatus}
+                      </p>
+                    </Link>
+                  </div>
                 </div>
               )
           )}
         </TabPanel>
         <TabPanel>
-          <h2>Tab: Accepted</h2>
           {orders.map(
             (order) =>
               order.orderStatus === 'Accepted' && (
                 <div key={order._id}>
-                  <h3>{order.orderNumber}</h3>
-                  <p>{order.description}</p>
-                  <p>{order.shopId.shopUserName}</p>
-                  <p>{order.orderStatus}</p>
+                  <Link
+                    to={`/order/${order._id}`}
+                    onClick={() => setOrder(order)}
+                  >
+                    <h4 className="card-title">
+                      Order Number: {order.orderNumber}
+                    </h4>
+                    <p className="card-text">
+                      {' '}
+                      Description: {order.description}
+                    </p>
+                    <p className="card-text">
+                      Shop Name: {order.shopId.shopUserName}
+                    </p>
+                    <p className="card-text">
+                      Order status: {order.orderStatus}
+                    </p>
+                  </Link>
                 </div>
               )
           )}
         </TabPanel>
         <TabPanel>
-          <h2>Tab: Out for delivery</h2>
           {orders.map(
             (order) =>
               order.orderStatus === 'Out for delivery' && (
                 <div key={order._id}>
-                  <h3>{order.orderNumber}</h3>
-                  <p>{order.description}</p>
-                  <p>{order.shopId.shopUserName}</p>
-                  <p>{order.orderStatus}</p>
+                  <Link
+                    to={`/order/${order._id}`}
+                    onClick={() => setOrder(order)}
+                  >
+                    <h4 className="card-title">
+                      Order Number: {order.orderNumber}
+                    </h4>
+                    <p className="card-text">
+                      {' '}
+                      Description: {order.description}
+                    </p>
+                    <p className="card-text">
+                      Shop Name: {order.shopId.shopUserName}
+                    </p>
+                    <p className="card-text">
+                      Order status: {order.orderStatus}
+                    </p>
+                  </Link>
                 </div>
               )
           )}
         </TabPanel>
         <TabPanel>
-          <h2>Tab: Delivered</h2>
           {orders.map(
             (order) =>
               order.orderStatus === 'Delivered' && (
                 <div key={order._id}>
-                  <h3>{order.orderNumber}</h3>
-                  <p>{order.description}</p>
-                  <p>{order.shopId.shopUserName}</p>
-                  <p>{order.orderStatus}</p>
+                  <Link
+                    to={`/order/${order._id}`}
+                    onClick={() => setOrder(order)}
+                  >
+                    <h4 className="card-title">
+                      Order Number: {order.orderNumber}
+                    </h4>
+                    <p className="card-text">
+                      {' '}
+                      Description: {order.description}
+                    </p>
+                    <p className="card-text">
+                      Shop Name: {order.shopId.shopUserName}
+                    </p>
+                    <p className="card-text">
+                      Order status: {order.orderStatus}
+                    </p>
+                  </Link>
                 </div>
               )
           )}
         </TabPanel>
         <TabPanel>
-          <h2>Tab: Rejected</h2>
           {orders.map(
             (order) =>
               order.orderStatus === 'Rejected' && (
                 <div key={order._id}>
-                  <h3>{order.orderNumber}</h3>
-                  <p>{order.description}</p>
-                  <p>{order.shopId.shopUserName}</p>
-                  <p>{order.orderStatus}</p>
+                  <Link
+                    to={`/order/${order._id}`}
+                    onClick={() => setOrder(order)}
+                  >
+                    <h4 className="card-title">
+                      Order Number: {order.orderNumber}
+                    </h4>
+                    <p className="card-text">
+                      {' '}
+                      Description: {order.description}
+                    </p>
+                    <p className="card-text">
+                      Shop Name: {order.shopId.shopUserName}
+                    </p>
+                    <p className="card-text">
+                      Order status: {order.orderStatus}
+                    </p>
+                  </Link>
                 </div>
               )
           )}

@@ -45,3 +45,8 @@ export const getOrdersList = async (role) => {
     return response.data
   }
 }
+
+export const updateOrderStatus = async (orderId, action) => {
+  const response = await client.put(`/orders/${orderId}/${action}`)
+  return response.data
+}
